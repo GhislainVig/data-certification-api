@@ -28,7 +28,7 @@ def predict(acousticness, danceability, duration_ms, energy, explicit, id, instr
         "liveness": float(liveness),
         "loudness": float(loudness),
         "mode": int(mode),
-        "name": name,
+        "name": artist,
         "release_date": release_date,
         "speechiness": float(speechiness),
         "tempo": float(tempo),
@@ -38,4 +38,8 @@ def predict(acousticness, danceability, duration_ms, energy, explicit, id, instr
     df = pd.DataFrame([x.values()], columns = x.keys())
     pipeline = joblib.load('model.joblib')
     y_pred = pipeline.predict(df)[0]
-    return {'Prediction' : y_pred}
+    return {
+        "artist": artist,
+        "name": name,
+        "popularity": y_pred
+    }
